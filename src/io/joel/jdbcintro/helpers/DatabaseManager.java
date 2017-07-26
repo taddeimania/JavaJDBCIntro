@@ -1,6 +1,9 @@
 package io.joel.jdbcintro.helpers;
 
+import io.joel.jdbcintro.model.Stat;
+
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -22,5 +25,11 @@ public class DatabaseManager {
 
     public void DropStatsTable() throws SQLException {
         statement.executeUpdate("DROP TABLE IF EXISTS stats");
+    }
+
+    public ResultSet findAll(String table) throws SQLException {
+        String formattedSql = String.format("SELECT * FROM %s", table);
+        ResultSet rs = statement.executeQuery(formattedSql);
+        return rs;
     }
 }

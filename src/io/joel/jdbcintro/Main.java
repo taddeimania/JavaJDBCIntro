@@ -4,6 +4,8 @@ import io.joel.jdbcintro.helpers.DatabaseManager;
 import io.joel.jdbcintro.model.Stat;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -22,14 +24,9 @@ public class Main {
             Stat joeMontana = new Stat("Joe Montana", 750, 2, statement);
             joeMontana.Save();
 
-
-            ResultSet rs = statement.executeQuery("SELECT * FROM stats");
-
-            while (rs.next()) {
-                String name = rs.getString("name");
-                int wins = rs.getInt("wins");
-                int losses = rs.getInt("losses");
-                System.out.printf("%s %s %s", name, wins, losses);
+            List<Stat> results = Stat.findAll(db);
+            for (Stat stat : results) {
+                System.out.println(stat);
             }
 
         } catch (SQLException ex) {
