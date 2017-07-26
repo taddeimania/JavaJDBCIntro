@@ -1,5 +1,7 @@
 package io.joel.jdbcintro;
 
+import io.joel.jdbcintro.helpers.DatabaseManager;
+
 import java.sql.*;
 
 public class Main {
@@ -8,9 +10,12 @@ public class Main {
         Class.forName("org.sqlite.JDBC");
 
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:stats.db")) {
+            DatabaseManager db = new DatabaseManager(connection);
+            db.DropStatsTable();
+            db.CreateStatsTable();
+
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DROP TABLE IF EXISTS stats");
-            statement.executeUpdate("CREATE TABLE stats (id INTEGER PRIMARY KEY, name STRING, wins INTEGER, losses INTEGER)");
+
             statement.executeUpdate("INSERT INTO stats (name, wins, losses) VALUES ('Joel', 10, 2)");
             ResultSet rs = statement.executeQuery("SELECT * FROM stats");
 
