@@ -24,6 +24,9 @@ public class Main {
             Stat joeMontana = new Stat("Joe Montana", 750, 2, statement);
             joeMontana.Save();
 
+            Stat sarah = new Stat("Sarah Taddei", 100, 10, statement);
+            sarah.Save();
+
             List<Stat> results = Stat.findAll(db);
             for (Stat stat : results) {
                 stat.setWins(0);
