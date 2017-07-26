@@ -12,6 +12,10 @@ public class DatabaseManager {
         this.statement = connection.createStatement();
     }
 
+    public Statement getStatement() {
+        return statement;
+    }
+
     public void CreateStatsTable() throws SQLException {
         statement.executeUpdate("CREATE TABLE stats (id INTEGER PRIMARY KEY, name STRING, wins INTEGER, losses INTEGER)");
     }

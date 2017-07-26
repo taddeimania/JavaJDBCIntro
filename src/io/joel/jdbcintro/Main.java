@@ -1,6 +1,7 @@
 package io.joel.jdbcintro;
 
 import io.joel.jdbcintro.helpers.DatabaseManager;
+import io.joel.jdbcintro.model.Stat;
 
 import java.sql.*;
 
@@ -13,10 +14,15 @@ public class Main {
             DatabaseManager db = new DatabaseManager(connection);
             db.DropStatsTable();
             db.CreateStatsTable();
+            Statement statement = db.getStatement();
 
-            Statement statement = connection.createStatement();
+            Stat joelStat = new Stat("Peanut", 3, 10, statement);
+            joelStat.Save();
 
-            statement.executeUpdate("INSERT INTO stats (name, wins, losses) VALUES ('Joel', 10, 2)");
+            Stat joeMontana = new Stat("Joe Montana", 750, 2, statement);
+            joeMontana.Save();
+
+
             ResultSet rs = statement.executeQuery("SELECT * FROM stats");
 
             while (rs.next()) {
