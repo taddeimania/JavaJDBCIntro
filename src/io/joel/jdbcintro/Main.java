@@ -14,8 +14,8 @@ public class Main {
         Class.forName("org.sqlite.JDBC");
 
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:stats.db")) {
-
-            WelcomeMenu();
+            DatabaseManager dbm = new DatabaseManager(connection);
+            WelcomeMenu(dbm);
 
 
         } catch (SQLException ex) {
@@ -23,7 +23,7 @@ public class Main {
         }
     }
 
-    public static void WelcomeMenu() {
+    public static void WelcomeMenu(DatabaseManager dbm) throws SQLException{
         System.out.println("=========================================================");
         System.out.println("Welcome to Stat Database 3000. What would you like to do?");
         System.out.println("1) Show All Stats");
@@ -37,9 +37,20 @@ public class Main {
         switch(choice){
             case 1:
                 System.out.println("Now showing all stat data");
+                List<Stat> results = Stat.findAll(dbm);
+                for (Stat stat : results){
+                    System.out.println(stat);
+                }
                 break;
             case 2:
-                System.out.println("Tell me some info about your stat person thing");
+                System.out.println("What is the name of the player?");
+                String name = scanner.next();
+                System.out.println("How Many Wins?");
+                int wins = scanner.nextInt();
+                System.out.println("How Many Losses?");
+                int losses = scanner.nextInt();
+                new Stat(name, wins, losses, dbm.getStatement()).Save();
+
                 break;
             case 3:
                 System.out.println("Which player name would you like to update?");
@@ -48,6 +59,6 @@ public class Main {
                 System.out.println("Sorry, invalid input.");
         }
 
-        WelcomeMenu();
+        WelcomeMenu(dbm);
     }
 }

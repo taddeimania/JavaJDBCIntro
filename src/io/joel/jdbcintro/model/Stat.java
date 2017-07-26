@@ -55,6 +55,10 @@ public class Stat {
         return tempCollection;
     }
 
+    public static Stat findByName(DatabaseManager dbm, String name) {
+
+    }
+
     public void setName(String name) {
         this.name = name;
     }
